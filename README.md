@@ -163,7 +163,9 @@ Ambassador service.
 
 As an L7 gateway, Ambassador exposes a public IP address. You'll need to know
 that address to run any of the tests below. Use the command `kubectl describe 
-service ambassador` and look for the 
+service ambassador` and look for the "LoadBalancer Ingress". That is the
+public-facing IP address of your Ambassador service. When you see 
+`AMBASSADOR_IP` in the examples below, replace it with that IP address.
 
 #### Simple HTTP echo service
 
