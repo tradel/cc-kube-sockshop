@@ -1,0 +1,5 @@
+apiVersion: ambassador/v1
+kind: TLSContext
+name: ambassador-consul
+hosts: []
+secret: ambassador-consul

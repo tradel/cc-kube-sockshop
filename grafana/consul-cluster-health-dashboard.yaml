@@ -1,0 +1,1245 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: monitoring
+  name: consul-cluster-health-dashboard
+  labels:
+     grafana_dashboard: "1"
+data:
+  consul-cluster-health-dashboard.json: |-
+    {
+    "__inputs": [],
+    "__requires": [
+        {
+        "type": "grafana",
+        "id": "grafana",
+        "name": "Grafana",
+        "version": "5.4.3"
+        },
+        {
+        "type": "panel",
+        "id": "graph",
+        "name": "Graph",
+        "version": "5.0.0"
+        },
+        {
+        "type": "panel",
+        "id": "singlestat",
+        "name": "Singlestat",
+        "version": "5.0.0"
+        }
+    ],
+    "annotations": {
+        "list": [
+        {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+        }
+        ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": null,
+    "links": [],
+    "panels": [
+        {
+        "cacheTimeout": null,
+        "colorBackground": false,
+        "colorValue": true,
+        "colors": [
+            "#299c46",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
+        ],
+        "format": "none",
+        "gauge": {
+            "maxValue": 1000,
+            "minValue": 0,
+            "show": true,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+        },
+        "gridPos": {
+            "h": 6,
+            "w": 4,
+            "x": 0,
+            "y": 0
+        },
+        "id": 2,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+            {
+            "name": "value to text",
+            "value": 1
+            },
+            {
+            "name": "range to text",
+            "value": 2
+            }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": " ms",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+            {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+            }
+        ],
+        "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+        },
+        "tableColumn": "",
+        "targets": [
+            {
+            "expr": "max(consul_raft_leader_lastContact) ",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "",
+            "refId": "A"
+            }
+        ],
+        "thresholds": "200,500",
+        "title": "Leader Last Contact",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+            {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+            }
+        ],
+        "valueName": "avg"
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 6,
+            "w": 5,
+            "x": 4,
+            "y": 0
+        },
+        "id": 16,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "avg by (kubernetes_node) (irate(node_cpu_seconds_total{mode=\"user\"}[1m])) * 100",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_node}}",
+            "refId": "B"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "CPU Usage Per Node",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "decimals": 0,
+            "format": "percent",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 6,
+            "w": 5,
+            "x": 9,
+            "y": 0
+        },
+        "id": 18,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "sum(increase(node_disk_read_bytes_total[1m])) by (kubernetes_node)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_node}}:read",
+            "refId": "A"
+            },
+            {
+            "expr": "sum(increase(node_disk_written_bytes_total[1m])) by (kubernetes_node)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_node}}:write",
+            "refId": "B"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Disk I/O Per Node",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "decimals": 0,
+            "format": "bytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 6,
+            "w": 5,
+            "x": 14,
+            "y": 0
+        },
+        "id": 14,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "sum(increase(node_network_receive_bytes_total[1m])) by (kubernetes_node)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_node}}:receive",
+            "refId": "A"
+            },
+            {
+            "expr": "sum(increase(node_network_transmit_bytes_total[1m])) by (kubernetes_node)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_node}}:transmit",
+            "refId": "B"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Network Traffic Per Node",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "decimals": 0,
+            "format": "bytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 7,
+            "w": 7,
+            "x": 0,
+            "y": 6
+        },
+        "id": 22,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "increase(consul_client_rpc{app=\"consul\",component=\"client\"}[1m])",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_pod_name}}",
+            "refId": "A"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Client RPC Requests Per Minute",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 7,
+            "w": 7,
+            "x": 7,
+            "y": 6
+        },
+        "id": 4,
+        "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "increase(consul_rpc_request{app=\"consul\",component=\"server\"}[1m])",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_pod_name}}",
+            "refId": "A"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Server RPC Requests Per Minute",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "format": "short",
+            "label": "Count",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 7,
+            "w": 5,
+            "x": 14,
+            "y": 6
+        },
+        "id": 12,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+            {
+            "alias": "/^sys-/",
+            "dashes": true,
+            "fill": 0
+            }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "go_memstats_alloc_bytes{app=\"consul\",component=\"server\"}",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_pod_name}}:alloc",
+            "refId": "A"
+            },
+            {
+            "expr": "go_memstats_sys_bytes{app=\"consul\",component=\"server\"}",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_pod_name}}:sys",
+            "refId": "B"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Allocated Memory",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "decimals": 0,
+            "format": "bytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 7,
+            "w": 7,
+            "x": 0,
+            "y": 13
+        },
+        "id": 8,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+        },
+        "lines": false,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+            {
+            "alias": "time-99th-percentile",
+            "bars": false,
+            "lines": true,
+            "yaxis": 2
+            }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "sum(increase(consul_raft_apply[1m]))",
+            "format": "time_series",
+            "instant": false,
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "count",
+            "refId": "A"
+            },
+            {
+            "expr": "max(consul_raft_commitTime{quantile=\"0.99\"})  ",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "time-99th-percentile",
+            "refId": "B"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Raft Transactions",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "format": "short",
+            "label": "Count",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "ms",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 7,
+            "w": 7,
+            "x": 7,
+            "y": 13
+        },
+        "id": 6,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "consul_raft_commitTime{app=\"consul\",quantile=\"0.99\"}",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_pod_name}}",
+            "refId": "A"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Raft Commit Time",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "decimals": 0,
+            "format": "ms",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 7,
+            "w": 5,
+            "x": 14,
+            "y": 13
+        },
+        "id": 10,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "go_gc_duration_seconds{app=\"consul\",component=\"server\",quantile=\"1\"}",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{kubernetes_pod_name}}",
+            "refId": "A"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "GC Time",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "decimals": 3,
+            "format": "s",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 6,
+            "w": 7,
+            "x": 0,
+            "y": 20
+        },
+        "id": 24,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "increase(consul_kvs_apply_count[1m])",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "count",
+            "refId": "A"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "KV Write Load",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+            "h": 6,
+            "w": 7,
+            "x": 7,
+            "y": 20
+        },
+        "id": 25,
+        "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+            {
+            "expr": "consul_kvs_apply{quantile=\"0.99\"}",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "time",
+            "refId": "A"
+            }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "KVS Apply Time",
+        "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+        },
+        "yaxes": [
+            {
+            "decimals": 0,
+            "format": "ms",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            },
+            {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+            }
+        ],
+        "yaxis": {
+            "align": false,
+            "alignLevel": null
+        }
+        },
+        {
+        "cacheTimeout": null,
+        "colorBackground": true,
+        "colorValue": false,
+        "colors": [
+            "#299c46",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
+        ],
+        "format": "none",
+        "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+        },
+        "gridPos": {
+            "h": 6,
+            "w": 5,
+            "x": 14,
+            "y": 20
+        },
+        "id": 20,
+        "interval": null,
+        "links": [],
+        "mappingType": 1,
+        "mappingTypes": [
+            {
+            "name": "value to text",
+            "value": 1
+            },
+            {
+            "name": "range to text",
+            "value": 2
+            }
+        ],
+        "maxDataPoints": 100,
+        "nullPointMode": "connected",
+        "nullText": null,
+        "postfix": "",
+        "postfixFontSize": "50%",
+        "prefix": "",
+        "prefixFontSize": "50%",
+        "rangeMaps": [
+            {
+            "from": "null",
+            "text": "N/A",
+            "to": "null"
+            }
+        ],
+        "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(0, 0, 0)",
+            "show": true
+        },
+        "tableColumn": "",
+        "targets": [
+            {
+            "expr": "increase(consul_raft_state_leader[1h])",
+            "format": "time_series",
+            "intervalFactor": 1,
+            "legendFormat": "",
+            "refId": "A"
+            }
+        ],
+        "thresholds": "1,5",
+        "title": "Leader Elections",
+        "type": "singlestat",
+        "valueFontSize": "80%",
+        "valueMaps": [
+            {
+            "op": "=",
+            "text": "N/A",
+            "value": "null"
+            },
+            {
+            "op": "=",
+            "text": "None :-)",
+            "value": "0"
+            }
+        ],
+        "valueName": "total"
+        }
+    ],
+    "refresh": false,
+    "schemaVersion": 16,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-1h",
+        "to": "now"
+    },
+    "timepicker": {
+        "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+        ],
+        "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+        ]
+    },
+    "timezone": "",
+    "title": "Consul Cluster Health",
+    "uid": "-ijohiuik",
+    "version": 1
+    }

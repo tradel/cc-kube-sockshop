@@ -1,0 +1,10 @@
+session_name: kube
+windows:
+- window_name: kube
+  layout: main-vertical
+  panes:
+    - shell_command: kubectl config current-context
+      focus: true
+    - kubectl port-forward service/consul-ui 8500:80 
+    - kubectl -n monitoring port-forward service/grafana 3000:80
+    - kubectl port-forward service/front-end 30001:80

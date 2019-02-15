@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end-nodeport
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  front-end_mapping
+      prefix: /socks/
+      tls: ambassador-consul
+      service: https://front-end-nodeport:443
+      ---
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  fallback_mapping
+      prefix: /
+      tls: ambassador-consul
+      service: https://front-end-nodeport:443
+spec:
+  type: NodePort
+  selector:
+    name: front-end
+  ports:
+  - port: 443
+    name: https-front-end
+    targetPort: 20000

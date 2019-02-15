@@ -1,0 +1,57 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: http-echo
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: http-echo
+      annotations:
+        "consul.hashicorp.com/connect-inject": "true"
+    spec:
+      containers:
+      - name: http-echo
+        image: hashicorp/http-echo:latest
+        args:
+          - -text="hello world"
+          - -listen=:8080
+        ports:
+        - name: http
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 3
+        resources:
+          limits:
+            cpu: "0.1"
+            memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-echo
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  http-echo_mapping
+      prefix: /echo/
+      tls: ambassador-consul
+      service: https://http-echo:443
+spec:
+  type: NodePort
+  selector:
+    app: http-echo
+  ports:
+  - port: 443
+    name: https-echo
+    targetPort: 20000
