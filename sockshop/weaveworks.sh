@@ -4,7 +4,7 @@ helm install --name=sockshop $HOME/Code/microservices-demo/deploy/kubernetes/hel
     --set loadtest.enabled=true \
     --set loadtest.replicas=2
 
-kubectl apply -f weaveworks-service.yaml
+kubectl create -f weaveworks-service.yaml
 kubectl port-forward service/front-end 30001:80 &
 
 echo ""
