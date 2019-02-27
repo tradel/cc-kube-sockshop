@@ -3,3 +3,9 @@
 _attic/
 .DS_Store
 
+*.key
+*.csr
+*.crt
+*.pem
+ssl.conf
+ca_config.json
