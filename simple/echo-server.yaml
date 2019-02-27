@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: http-echo
+        role: server
       annotations:
         "consul.hashicorp.com/connect-inject": "true"
     spec:
