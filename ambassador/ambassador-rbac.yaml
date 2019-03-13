@@ -73,13 +73,6 @@ spec:
     spec:
       serviceAccountName: ambassador
       restartPolicy: Always
-      volumes:
-      - name: stats-exporter-mapping-config
-        configMap:
-          name: ambassador-statsd-mapping-config
-          items:
-          - key: exporterConfiguration
-            path: mapping-config.yaml
       containers:
       - name: ambassador
         image: quay.io/datawire/ambassador:0.51.2
@@ -91,8 +84,6 @@ spec:
             cpu: 200m
             memory: 100Mi
         env:
-        - name: STATSD_ENABLED
-          value: "true"
         - name: AMBASSADOR_NAMESPACE
           valueFrom:
             fieldRef:
@@ -116,16 +107,3 @@ spec:
             port: 8877
           initialDelaySeconds: 30
           periodSeconds: 3
-      - name: statsd-sink
-        image: prom/statsd-exporter:v0.7.0
-        ports:
-        - name: metrics
-          containerPort: 9102
-        - name: listener
-          containerPort: 8125
-        args: ["--statsd.listen-udp=:8125", "--statsd.mapping-config=/statsd-exporter/mapping-config.yaml"]
-        volumeMounts:
-        - name: stats-exporter-mapping-config
-          mountPath: /statsd-exporter/
-          readOnly: true
-      restartPolicy: Always
