@@ -29,10 +29,6 @@ Specifically, it demonstrates the following features:
 
 ## Prerequisites
 
-Because the Ambassador/Connect integration is still in closed beta, you will 
-need to request credentials for their container registry. Please contact
-[me][] for details.
-
 You should also have a Kubernetes cluster up and running already, with the
 `kubectl` utility configured properly to talk to it, and a recent release of
 [Helm][]. On a Mac with Homebrew, you can simply type:
