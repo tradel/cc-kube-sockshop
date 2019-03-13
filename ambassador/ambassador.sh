@@ -14,8 +14,25 @@ kubectl create -f ambassador-consul-connector.yaml
 # Deploy the "Quote of the Moment" service for testing
 kubectl create -f qotm.yaml
 
-ip=$(kubectl get svc ambassador -o json | jq -r ".status.loadBalancer.ingress[0].ip")
-port=$(kubectl get svc ambassador -o json | jq -r ".spec.ports[0].port")
+echo ""
+echo "Waiting for Ambassador pod to start..."
+while [[ $( kubectl get pods -l service=ambassador -o jsonpath='{.items[0].status.phase}' ) != "Running" ]]
+do
+    sleep 5
+done
+
+echo "Waiting for Ambassador Connect pod to start..."
+while [[ $( kubectl get pods -l app=ambassador-pro,component=consul-connect -o jsonpath='{.items[0].status.phase}' ) != "Running" ]]
+do
+    sleep 5
+done
+
+echo "Waiting for Ambassador load balancer to become ready..."
+ip=$( kubectl get service ambassador -o jsonpath='{.status.loadBalancer.ingress[0].ip}' )
+while [[ "$ip" == "" ]]
+do 
+    sleep 5 
+done
 
 echo ""
-echo -n "Ambassador proxy is running at: ${ip}:${port}"
+echo "Ambassador proxy is running at: https://${ip}"
