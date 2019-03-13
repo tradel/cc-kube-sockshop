@@ -15,16 +15,16 @@
 global:
   enabled: true
   domain: consul
-  image: "consul:1.4.2"
+  image: "hashicorp/consul-enterprise:1.4.3-ent"
   datacenter: dc1
 
 server:
   enabled: true
   replicas: 3
   bootstrapExpect: 3
-  # enterpriseLicense:
-  #   secretName: "consul-license"
-  #   secretKey: "key"
+  enterpriseLicense:
+    secretName: "consul-ent-license"
+    secretKey: "key"
   storage: 20Gi
   connect: true
 
