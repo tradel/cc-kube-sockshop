@@ -9,3 +9,4 @@ _attic/
 *.pem
 ssl.conf
 ca_config.json
+nohup.out

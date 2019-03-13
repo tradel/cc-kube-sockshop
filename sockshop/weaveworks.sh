@@ -1,13 +1,14 @@
 #!/bin/bash
 
-helm install --name=sockshop $HOME/Code/microservices-demo/deploy/kubernetes/helm-chart \
+echo "Installing Sock Shop from Helm chart repo..."
+helm repo add consul https://consul-helm-charts.storage.googleapis.com
+helm install --wait --name=sockshop consul/microservices-demo \
     --set loadtest.enabled=true \
     --set loadtest.replicas=2
-
-kubectl create -f weaveworks-service.yaml
-kubectl port-forward service/front-end 30001:80 &
+kubectl apply -f weaveworks-service.yaml
 
 echo ""
-echo -n "Your sock shop URL is: http://localhost:30001"
+echo "Your sock shop URL is: http://localhost:30001"
 
+nohup kubectl port-forward service/front-end 30001:80 &
 open http://localhost:30001
