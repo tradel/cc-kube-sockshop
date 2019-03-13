@@ -35,6 +35,11 @@ You should also have a Kubernetes cluster up and running already, with the
 
     brew install kubernetes-helm kubernetes-cli
 
+Create a Kubernetes secret with the contents of your Consul Enterprise license
+key.
+
+    kubectl create secret generic consul-ent-license --from-file=bef1b5c5-4290-a854-a34b-af1651d5d41b.hclic  
+
 ---
 
 ## Setup
