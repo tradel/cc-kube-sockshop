@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# NOTE: a docker-registry secret named "quayio-datawire" must already exist
-# in the cluster to successfully deploy the consul connector
+# NOTE: the docker-registry secret named "quayio-datawire" is no longer
+# needed to install Ambassador with Connect integration.
 
 # Needed for GKE
 kubectl create clusterrolebinding my-cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud info --format="value(config.account)")
