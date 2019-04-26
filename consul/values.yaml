@@ -15,8 +15,12 @@
 global:
   enabled: true
   domain: consul
-  image: "hashicorp/consul-enterprise:1.4.3-ent"
+  image: "hashicorp/consul-enterprise:1.4.4-ent"
   datacenter: dc1
+  gossipEncryption:
+    enabled: true
+    secretName: "consul-gossip-key"
+    secretKey: "key"
 
 server:
   enabled: true
@@ -44,3 +48,6 @@ ui:
 connectInject:
   enabled: true
   default: false 
+
+syncCatalog:
+  enabled: false 
