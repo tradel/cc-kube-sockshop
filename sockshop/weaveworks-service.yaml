@@ -10,20 +10,25 @@ metadata:
       kind:  Mapping
       name:  front-end_mapping
       prefix: /socks/
+      service: front-end-proxy
+      resolver: consul-dc1
       tls: ambassador-consul
-      service: https://front-end-nodeport:443
+      load_balancer:
+        policy: round_robin
       ---
       apiVersion: ambassador/v1
       kind:  Mapping
       name:  fallback_mapping
       prefix: /
+      service: front-end-proxy
+      resolver: consul-dc1
       tls: ambassador-consul
-      service: https://front-end-nodeport:443
+      load_balancer:
+        policy: round_robin
 spec:
   type: NodePort
   selector:
     name: front-end
   ports:
-  - port: 443
-    name: https-front-end
-    targetPort: 20000
+  - port: 80
+    name: http

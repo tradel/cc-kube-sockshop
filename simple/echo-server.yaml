@@ -43,16 +43,18 @@ metadata:
     getambassador.io/config: |
       ---
       apiVersion: ambassador/v1
-      kind:  Mapping
-      name:  http-echo_mapping
+      kind: Mapping
+      name: http-echo_mapping
       prefix: /echo/
+      service: http-echo-proxy
+      resolver: consul-dc1
       tls: ambassador-consul
-      service: https://http-echo:443
+      load_balancer:
+        policy: round_robin
 spec:
   type: NodePort
   selector:
     app: http-echo
   ports:
-  - port: 443
-    name: https-echo
-    targetPort: 20000
+  - port: 80
+    name: http
