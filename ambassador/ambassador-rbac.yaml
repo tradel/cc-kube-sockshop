@@ -21,15 +21,10 @@ metadata:
 rules:
 - apiGroups: [""]
   resources:
+  - namespaces
   - services
-  verbs: ["get", "list", "watch"]
-- apiGroups: [""]
-  resources:
-  - configmaps
-  verbs: ["create", "update", "patch", "get", "list", "watch"]
-- apiGroups: [""]
-  resources:
   - secrets
+  - endpoints
   verbs: ["get", "list", "watch"]
 ---
 apiVersion: v1
@@ -49,13 +44,6 @@ subjects:
 - kind: ServiceAccount
   name: ambassador
   namespace: default
----  
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ambassador-statsd-mapping-config
-data:
-  exporterConfiguration: ''
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -71,11 +59,19 @@ spec:
       labels:
         service: ambassador
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  service: ambassador
+              topologyKey: kubernetes.io/hostname
       serviceAccountName: ambassador
-      restartPolicy: Always
       containers:
       - name: ambassador
-        image: quay.io/datawire/ambassador:0.51.2
+        image: quay.io/datawire/ambassador:0.60.0
         resources:
           limits:
             cpu: 1
@@ -90,9 +86,9 @@ spec:
               fieldPath: metadata.namespace
         ports:
         - name: http
-          containerPort: 80
+          containerPort: 8080
         - name: https
-          containerPort: 443
+          containerPort: 8443
         - name: admin
           containerPort: 8877
         livenessProbe:
@@ -107,3 +103,4 @@ spec:
             port: 8877
           initialDelaySeconds: 30
           periodSeconds: 3
+      restartPolicy: Always

@@ -7,7 +7,7 @@
 kubectl create clusterrolebinding my-cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud info --format="value(config.account)")
 
 # Deploy the Ambassador proxy and its Consul connector
-kubectl apply -f ambassador-rbac-prometheus.yaml
+kubectl apply -f ambassador-rbac.yaml
 kubectl apply -f ambassador-service.yaml
 kubectl apply -f ambassador-consul-connector.yaml 
 
@@ -22,7 +22,7 @@ do
 done
 
 echo "Waiting for Ambassador Connect pod to start..."
-while [[ $( kubectl get pods -l app=ambassador-pro,component=consul-connect -o jsonpath='{.items[0].status.phase}' ) != "Running" ]]
+while [[ $( kubectl get pods -l app=ambassador,component=consul-connect -o jsonpath='{.items[0].status.phase}' ) != "Running" ]]
 do
     sleep 5
 done
@@ -32,6 +32,7 @@ ip=$( kubectl get service ambassador -o jsonpath='{.status.loadBalancer.ingress[
 while [[ "$ip" == "" ]]
 do 
     sleep 5 
+    ip=$( kubectl get service ambassador -o jsonpath='{.status.loadBalancer.ingress[0].ip}' )
 done
 
 echo ""
