@@ -8,8 +8,9 @@ This repo contains the configuration files and scripts to set up a Kubernetes
 cluster with everything you need to demo or explore Consul Connect. 
 Specifically, it demonstrates the following features:
 
- * [Helm chart][helm-blog] to deploy Consul agents and servers, the Consul 
-   Connect injector, and catalog sync between Consul and Kubernetes.
+ * [Helm chart][helm-blog] to deploy Consul agents and servers with Gossip 
+   encryption, the Consul Connect injector, and catalog sync between 
+   Consul and Kubernetes.
 
  * Automatic injection of [Consul Connect sidecars][sidecars] into pods with
    a simple annotation.
@@ -23,7 +24,8 @@ Specifically, it demonstrates the following features:
    with Consul Connect mediating all connections between services. 
 
  * DataWire [Ambassador][] as the L7 gateway, routing requests from the 
-   Internet to the Connect proxies with full mutual TLS. 
+   Internet to the Connect proxies with full mutual TLS and using Consul
+   for service discovery.
 
 ---
 
@@ -223,6 +225,7 @@ The traffic flow to serve the page looks like this:
 
  - [ ] Monitoring with Prometheus
  - [ ] Outward-facing SSL/TLS with Ambassador
+ - [ ] ACL bootstrapping
 
 [sidecars]:    https://www.consul.io/docs/platform/k8s/connect.html
 [sockshop]:    https://microservices-demo.github.io/
